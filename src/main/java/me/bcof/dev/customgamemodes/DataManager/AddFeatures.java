@@ -7,6 +7,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class AddFeatures {
     private ConfigHandler configHandler = new ConfigHandler();
 
+    /*
+    Creates the features in the config
+     */
+
     public void createFeaturesInConfig(){
         FileConfiguration file = configHandler.getFileConfig();
 
@@ -53,7 +57,15 @@ public class AddFeatures {
             file.createSection("Health-Randomizer");
             ConfigurationSection section = file.getConfigurationSection("Health-Randomizer");
             section.set("enabled", true);
-            section.set("effect-all-players", true);
+            section.set("seconds-to-execute", 30);
+            configHandler.saveFileConfig();
+
+        }
+
+        if(file.getConfigurationSection("Look-At-Block") == null){
+            file.createSection("Look-At-Block");
+            ConfigurationSection section = file.getConfigurationSection("Look-At-Block");
+            section.set("enabled", true);
             configHandler.saveFileConfig();
 
         }

@@ -36,7 +36,7 @@ public class FeatureListCommand implements CommandExecutor {
         }else{
             System.out.println(returnFeatureList());
         }
-        return false;
+        return true;
     }
 
 

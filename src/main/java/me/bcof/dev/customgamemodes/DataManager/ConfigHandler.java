@@ -8,9 +8,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class ConfigHandler {
-    private CustomGameModes main = CustomGameModes.getPlugin(CustomGameModes.class);
-    private FileConfiguration fileConfig;
-    private File file;
+    private static CustomGameModes main = CustomGameModes.getPlugin(CustomGameModes.class);
+    private static FileConfiguration fileConfig;
+    private static File file;
 
     public void setup(){
         if(!main.getDataFolder().exists()){
@@ -28,11 +28,11 @@ public class ConfigHandler {
         fileConfig = YamlConfiguration.loadConfiguration(file);
     }
 
-    public FileConfiguration getFileConfig() {
+    public static FileConfiguration getFileConfig() {
         return fileConfig;
     }
 
-    public void saveFileConfig(){
+    public static void saveFileConfig(){
         try{
             fileConfig.save(file);
         }catch(IOException e){
@@ -40,7 +40,7 @@ public class ConfigHandler {
         }
     }
 
-    public void reloadCaneConfig(){
+    public static void reloadCaneConfig(){
         fileConfig = YamlConfiguration.loadConfiguration(file);
     }
 }

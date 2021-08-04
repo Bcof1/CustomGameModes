@@ -6,6 +6,7 @@ import me.bcof.dev.customgamemodes.features.BlockMultiplies.BlockBrokeEvent;
 import me.bcof.dev.customgamemodes.features.FeatureListCommand;
 
 import me.bcof.dev.customgamemodes.features.LavaFollowsYou.LavaEvent;
+import me.bcof.dev.customgamemodes.features.LookAtBlock.lookAtBlockEvent;
 import me.bcof.dev.customgamemodes.features.RandomBlocksSpawn.randomBlocksSpawn;
 import me.bcof.dev.customgamemodes.features.SmeltingMultipliesItems.SmeltingEvent;
 import org.bukkit.Bukkit;
@@ -25,6 +26,10 @@ public final class CustomGameModes extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        loadConfigHandler();
+
+        AddFeatures addFeatures = new AddFeatures();
+        addFeatures.createFeaturesInConfig();
 
         getCommand("customfeatures").setExecutor(new FeatureListCommand());
 
@@ -32,9 +37,10 @@ public final class CustomGameModes extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SmeltingEvent(), this);
         getServer().getPluginManager().registerEvents(new BlockBrokeEvent(), this);
         getServer().getPluginManager().registerEvents(new randomBlocksSpawn(), this);
+        getServer().getPluginManager().registerEvents(new lookAtBlockEvent(), this);
+        healthRandomizer();
 
-        AddFeatures addFeatures = new AddFeatures();
-        addFeatures.createFeaturesInConfig();
+
 
     }
 
@@ -60,6 +66,7 @@ public final class CustomGameModes extends JavaPlugin {
     public void healthRandomizer() {
         ConfigHandler configHandler = new ConfigHandler();
         FileConfiguration file = configHandler.getFileConfig();
+        ConfigurationSection section = file.getConfigurationSection("Health-Randomizer");
 
 
         new BukkitRunnable() {
@@ -70,22 +77,16 @@ public final class CustomGameModes extends JavaPlugin {
                     if (section.getBoolean("enabled")) {
                         Random random = new Random();
 
-
                         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                             int num = random.nextInt((int) player.getMaxHealth());
                             player.setHealth(num);
                         }
-
-
                     }
-
                 }
-
-
-                cancel();
             }
-        }.runTaskTimer(this, 1, 1);
+        }.runTaskTimer(this, 20L * section.getInt("seconds-to-execute"), 1);
 
     }
+
 
 }
