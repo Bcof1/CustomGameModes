@@ -1,0 +1,9 @@
+name: CustomGameModes
+version: ${project.version}
+main: me.bcof.dev.customgamemodes.CustomGameModes
+api-version: 1.17
+authors: [ Bcof ]
+description: Minecraft... but. Experience custom challenges seen on Wisp
+commands:
+  customfeatures:
+    description: Lists all current features on the plugin
